@@ -34,7 +34,7 @@
     <div id="header">
         <h2> Header</h2>
         <h5>
-        <? php
+        <?php
             $test_arr = array(
                 'A' => 'a1'
                 , 'B' => 'b1'
