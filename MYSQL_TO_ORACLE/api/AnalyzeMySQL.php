@@ -19,8 +19,13 @@ if($matched_table_name) {
 }
 $matched_comment_list = $MySQLAnalyzer->get_comment_list();
 if($matched_comment_list) {
-    echo "OMG";
+    echo "COLUMN NAME is";
     foreach($matched_comment_list[1] as $matched_comment) {
+        echo "[MATCHED]";
+        print_r($matched_comment);
+    }
+    echo "COMMENT Content is";
+    foreach($matched_comment_list[2] as $matched_comment) {
         echo "[MATCHED]";
         print_r($matched_comment);
     }

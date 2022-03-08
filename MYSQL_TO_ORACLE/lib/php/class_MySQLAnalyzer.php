@@ -33,7 +33,7 @@ class MySQLAnalyzer {
     {
         $temp_ddl = $this -> ddl;
         //$pattern_comment = '!\"[^\"]+\"\s[^\,]+COMMENT\s\'([^\']+)\'\,!i';
-        $pattern_comment = "!COMMENT\s'([^']+)',!i";
+        $pattern_comment = "!\"([^\"]+)\"[^\"]+COMMENT\s'([^']+)',!i";
 
         if(preg_match_all($pattern_comment, $temp_ddl, $matches)) {
             echo "WOW$" .chr(10);
