@@ -66,16 +66,23 @@
         <h2> 사용법 </h2>
         <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
     </div>
-    <input id="converter" type="button" value="컨버팅"></input>
+    <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"></input>
+    <input id="converter" type="button" value="컨버팅" onclick="test()"></input>
     <div class="content">
         <div class="left">
             <textarea class="text_area" id="mysql_ddl"></textarea>
         </div>
         <div class="right">
+            <textarea class="text_area" id="oracle_ddl" readonly></textarea>
         </div>
     </div>
     <div id="footer">
         <h5> <strong>swgil@huvenet.com</strong> | <CopyRight>All right is reserved.</CopyRight> </h5>
     </div>
 </body>
+<script>
+function test() {
+    alert("test");
+}
+</script>
 </html>
