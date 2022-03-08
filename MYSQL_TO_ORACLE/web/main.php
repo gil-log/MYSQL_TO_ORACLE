@@ -83,18 +83,18 @@
 </body>
 <script>
 function convert() {
-    let schema_name = document.getElementById("schema_name").value;
-    console.log(schema_name);
     analyzeMysql();
 }
 function analyzeMysql() {
     let mysql_ddl = document.getElementById("mysql_ddl").value;
     console.log(mysql_ddl);
+    let schema_name = document.getElementById("schema_name").value;
+    console.log(schema_name);
     const url = "../api/AnalyzeMySQL.php";
     const method = "POST";
     const requestData = {
-      DDL : 'CREATE TABLE BY DNASSAF',
-      SCHEMA_NAME : "RENTA1111111"
+      DDL : mysql_ddl,
+      SCHEMA_NAME : schema_name
     };
     console.log(requestData);
     callAjax(url, method, requestData, alert);

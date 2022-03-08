@@ -10,9 +10,12 @@ if($decodedRequest->DDL == null) {
     exit();
 }
 
-echo "DDL :)";
-
 $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
-$MySQLAnalyzer->echo_property();
 
+$match_table_name = $MySQLAnalyzer->get_table_name();
+if($match_table_name) {
+    echo "WOW";
+    echo $match_table_name;
+}
+$MySQLAnalyzer->get_comment_list();
 ?>
