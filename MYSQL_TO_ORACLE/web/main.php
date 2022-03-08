@@ -67,7 +67,7 @@
         <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
     </div>
     <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"></input>
-    <input id="converter" type="button" value="컨버팅" onclick="test()"></input>
+    <input id="converter" type="button" value="컨버팅" onclick="convert()"></input>
     <div class="content">
         <div class="left">
             <textarea class="text_area" id="mysql_ddl"></textarea>
@@ -81,8 +81,14 @@
     </div>
 </body>
 <script>
-function test() {
-    alert("test");
+function convert() {
+    let schema_name = document.getElementById("schema_name").value;
+    console.log(schema_name);
+    analyzeMysql();
+}
+function analyzeMysql() {
+    let mysql_ddl = document.getElementById("mysql_ddl").value;
+    console.log(mysql_ddl);
 }
 </script>
 </html>
