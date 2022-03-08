@@ -1,9 +1,11 @@
 <?php header('Content-Type: text/html; charset=UTF-8'); ?>
+<?php require("../lib/php/common.php")?>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>MySQL to Oracle Migratior</title>
+    <script type="text/javascript" src="../lib/js/common.js"></script>
     <style type="text/css">
         #wrapper {
             width: 980px;
@@ -65,6 +67,11 @@
     <div id="header">
         <h2> 사용법 </h2>
         <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
+        <?php
+            $test = new Test();
+
+            $test->test_php();
+        ?>
     </div>
     <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"></input>
     <input id="converter" type="button" value="컨버팅" onclick="convert()"></input>
@@ -89,6 +96,14 @@ function convert() {
 function analyzeMysql() {
     let mysql_ddl = document.getElementById("mysql_ddl").value;
     console.log(mysql_ddl);
+    let url = '../lib/php/test.php';
+    let method = 'GET';
+    let callback = test_console;
+    callAjax(url, method, null, callback);
+}
+
+function test_console(val) {
+    console.log(val);
 }
 </script>
 </html>
