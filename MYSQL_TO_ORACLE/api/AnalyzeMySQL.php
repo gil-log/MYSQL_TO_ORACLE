@@ -12,10 +12,17 @@ if($decodedRequest->DDL == null) {
 
 $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
 
-$match_table_name = $MySQLAnalyzer->get_table_name();
-if($match_table_name) {
+$matched_table_name = $MySQLAnalyzer->get_table_name();
+if($matched_table_name) {
     echo "WOW";
-    echo $match_table_name;
+    echo $matched_table_name;
 }
-$MySQLAnalyzer->get_comment_list();
+$matched_comment_list = $MySQLAnalyzer->get_comment_list();
+if($matched_comment_list) {
+    echo "OMG";
+    foreach($matched_comment_list[1] as $matched_comment) {
+        echo "[MATCHED]";
+        print_r($matched_comment);
+    }
+}
 ?>
