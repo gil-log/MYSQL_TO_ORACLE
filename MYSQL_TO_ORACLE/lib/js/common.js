@@ -1,11 +1,11 @@
-function callAjax(url, method, data, callback){
+function callAjax(url, method, data){
     var xhr = new XMLHttpRequest();
 
     var response = '';
 
     xhr.onload = function() {
         if( xhr.status === 200 || xhr.status === 201 ){
-            callback(xhr.responseText);
+            return xhr.responseText;
         } else {
             console.log(xhr.responseText);
         }
