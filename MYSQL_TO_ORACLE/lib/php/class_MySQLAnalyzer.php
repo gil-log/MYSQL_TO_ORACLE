@@ -10,7 +10,6 @@ class MySQLAnalyzer {
         $this -> schema_name = $SCHEMA_NAME;
     }
 
-    function
     function echo_property()
     {
         echo "DDL : " . $this->ddl . " SCHEMA NAME : " . $this->schema_name;

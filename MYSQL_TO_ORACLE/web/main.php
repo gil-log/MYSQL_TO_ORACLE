@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>MySQL to Oracle Migratior</title>
+    <title>MySQL to Oracle Migrator</title>
     <script type="text/javascript" src="../lib/js/common.js"></script>
     <style type="text/css">
         #wrapper {
@@ -67,8 +67,8 @@
         <h2> 사용법 </h2>
         <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
     </div>
-    <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"></input>
-    <input id="converter" type="button" value="컨버팅" onclick="convert()"></input>
+    <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"/>
+    <input id="converter" type="button" value="컨버팅" onclick="convert()"/>
     <div class="content">
         <div class="left">
             <textarea class="text_area" id="mysql_ddl"></textarea>
@@ -90,6 +90,18 @@ function convert() {
 function analyzeMysql() {
     let mysql_ddl = document.getElementById("mysql_ddl").value;
     console.log(mysql_ddl);
+    const url = "../api/AnalyzeMySQL.php";
+    const method = "POST";
+    const requestData = {
+      DDL : 'CREATE TABLE BY DNASSAF',
+      SCHEMA_NAME : "RENTA1111111"
+    };
+    console.log(requestData);
+    callAjax(url, method, requestData, alert);
+}
+
+function test_page(response) {
+    alert(response);
 }
 </script>
 </html>
