@@ -19,20 +19,28 @@ $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA
 
 $matched_table_name = $MySQLAnalyzer->get_table_name();
 if($matched_table_name) {
-    echo "WOW";
+    echo "[TABLE NAME] ";
     echo $matched_table_name;
+    echo chr(10);
+} else {
+    echo "[ERROR] TABLE NAME NOT MATCHED";
+    exit();
 }
 $matched_comment_list = $MySQLAnalyzer->get_comment_list();
 if($matched_comment_list) {
-    echo "COLUMN NAME is";
+    echo "[COLUMN NAME] ";
+    echo chr(10);
+    echo "-----------";
     foreach($matched_comment_list[1] as $matched_comment) {
-        echo "[MATCHED]";
         print_r($matched_comment);
     }
-    echo "COMMENT Content is";
+    echo "-----------";
+    echo "[COMMENT] ";
+    echo chr(10);
+    echo "-----------";
     foreach($matched_comment_list[2] as $matched_comment) {
-        echo "[MATCHED]";
         print_r($matched_comment);
     }
+    echo "-----------";
 }
 ?>

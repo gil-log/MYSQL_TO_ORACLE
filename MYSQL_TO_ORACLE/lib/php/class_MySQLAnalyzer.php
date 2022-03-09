@@ -36,8 +36,6 @@ class MySQLAnalyzer {
         $pattern_comment = "!\"([^\"]+)\"[^\"]+COMMENT\s'([^']+)',!i";
 
         if(preg_match_all($pattern_comment, $temp_ddl, $matches)) {
-            echo "WOW$" .chr(10);
-            echo($matches[1][0]);
             return $matches;
         }
         return null;
