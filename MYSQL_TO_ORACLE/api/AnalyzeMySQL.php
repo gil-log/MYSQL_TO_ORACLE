@@ -6,7 +6,12 @@ $request = file_get_contents("php://input");
 $decodedRequest = json_decode($request);
 
 if($decodedRequest->DDL == null) {
-    echo "DDL NOT EXIST";
+    echo "[ERROR] DDL NOT EXIST";
+    exit();
+}
+
+if($decodedRequest->SCHEMA_NAME == null) {
+    echo "[ERROR] SCHEMA NAME NOT EXIST";
     exit();
 }
 
