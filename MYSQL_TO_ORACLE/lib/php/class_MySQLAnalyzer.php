@@ -97,7 +97,8 @@ class MySQLAnalyzer {
         $replace_datetime_type = preg_replace("!\sdatetime\s!i", " TIMESTAMP ", $replace_tinyint_type);
         $replace_text_type = preg_replace("!\stext!i", " CLOB", $replace_datetime_type);
         $replace_character_set_type = preg_replace("!\sCHARACTER\sSET\sutf8mb4!i", "", $replace_text_type);
-        return $replace_character_set_type;
+        $replace_set_type = preg_replace("!\sset\([^)]+\)!i", " VARCHAR(30)", $replace_character_set_type);
+        return $replace_set_type;
     }
 
     function replace_primary_key($ddl)
@@ -160,7 +161,6 @@ class MySQLAnalyzer {
             $matched_key_column = implode(", ", $matches[1]);
             $index_ddl_tail = ");";
             return $index_ddl_head . $matched_key_column . $index_ddl_tail;
-
         }
         return null;
     }
@@ -171,6 +171,11 @@ class MySQLAnalyzer {
             return preg_replace('!,[\s]+KEY\s"[^"]+"\s\("([^)]+)"\)!i',"" , $ddl);
         }
         return $ddl;
+    }
+
+    function switch_null_default_location($ddl)
+    {
+        return preg_replace('!(NOT\sNULL)\s(DEFAULT\s[^,]+),!i', '$2 $1,', $ddl);
     }
 }
 

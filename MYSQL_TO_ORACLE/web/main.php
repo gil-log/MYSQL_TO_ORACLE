@@ -113,6 +113,9 @@ function analyzeMysql() {
     callAjax(url, method, requestData, test);
 }
 function test(data) {
+    console.log("----------");
+    console.log(data);
+    console.log("----------");
     const response = JSON.parse(data);
     const table_ddl = response.TABLE_DDL;
     const seq_ddl = response.SEQ_DDL;

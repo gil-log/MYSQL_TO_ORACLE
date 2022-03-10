@@ -35,6 +35,6 @@ $result = array(
   , "SYNONYM_DDL" => $synonym_ddl
   , "INDEX_DDL" => $index_ddl
 );
-
-echo json_encode($result,JSON_UNESCAPED_UNICODE);
+echo $MySQLAnalyzer->switch_null_default_location($table_ddl);
+//echo json_encode($result,JSON_UNESCAPED_UNICODE);
 ?>
