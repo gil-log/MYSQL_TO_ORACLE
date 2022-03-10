@@ -15,7 +15,12 @@ if($decodedRequest->SCHEMA_NAME == null) {
     exit();
 }
 
-$MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
+try {
+    $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
+} catch(Exception $e) {
+    echo $e->getMessage();
+    exit();
+}
 
 $matched_table_name = $MySQLAnalyzer->get_table_name();
 if($matched_table_name) {

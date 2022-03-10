@@ -7,10 +7,17 @@ class MySQLAnalyzer {
     public $constraint_ddl;
     public $primary_key;
 
+    /**
+     * @throws Exception
+     */
     function __construct($DDL, $SCHEMA_NAME)
     {
+        if(!$DDL) throw new Exception("[ERROR] DDL NOT EXIST");
         $this -> ddl = $DDL;
+        if(!$SCHEMA_NAME) throw new Exception("[ERROR] SCHEMA NAME NOT EXIST");
         $this -> schema_name = $SCHEMA_NAME;
+        if(!$this->get_table_name()) throw new Exception("[ERROR] TABLE NAME NOT MATCHED");
+        $this -> table_name = $this -> get_table_name();
     }
 
     function echo_property()
@@ -49,6 +56,25 @@ class MySQLAnalyzer {
     function remove_cascade_update_in_ddl($ddl)
     {
         return preg_replace("!\sON\sUPDATE\sCASCADE!i", "", $ddl);
+    }
+
+    function make_sequence_ddl()
+    {
+        $seq_table_name = preg_replace("!_!i", "", $this->table_name);
+        $seq_ddl_head = "CREATE SEQUENCE ";
+        $seq_ddl_tail = "SEQ INCREMENT BY 1 START WITH 1;";
+        return $seq_ddl_head. $this->schema_name . "." . $seq_table_name . $seq_ddl_tail;
+    }
+
+    function make_comment_ddl()
+    {
+        $comment_ddl_head = "COMMENT ON COLUMN ";
+        $comment_ddl_tail = " IS '";
+        $comment_ddl = array();
+        foreach($matched_comment_list[1] as $key => $value) {
+            $temp_comment_ddl_item = $comment_ddl_head . $matched_table_name . "." . $matched_comment_list[1][$key] . $comment_ddl_tail . $matched_comment_list[2][$key] . "';";
+            $comment_ddl[] = $temp_comment_ddl_item;
+        }
     }
 }
 
