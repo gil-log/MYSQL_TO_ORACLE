@@ -149,14 +149,11 @@ class MySQLAnalyzer {
 
     function check_invalid_query_end($ddl)
     {
-        $result = "";
         $temp_ddl = $ddl;
         if(preg_match('!,\n\);!i', $ddl, $matches)) {
-            $result .= "CASE1 ";
             $temp_ddl = preg_replace('!,\n\);!i', chr(10) . ");", $temp_ddl);
         }
         if(preg_match('!,\n,!i', $ddl, $matches)) {
-            $result .= "CASE2 ";
             $temp_ddl = preg_replace('!,\n,!i',"," . chr(10), $temp_ddl);
         }
         return $temp_ddl;
