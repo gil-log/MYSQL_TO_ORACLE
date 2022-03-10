@@ -32,14 +32,11 @@ print_r($comment_ddl);
 
 $table_ddl = $MySQLAnalyzer->make_table_ddl();
 
-$replace_type_ddl = $MySQLAnalyzer->replace_type($table_ddl);
+echo "!!!!!";
+echo $table_ddl;
 
-$replace_primary_key_ddl = $MySQLAnalyzer->replace_primary_key($replace_type_ddl);
-
-echo "WWWWW";
-echo $replace_primary_key_ddl;
-
-
-echo "!!!@$!$!$!$";
-echo $MySQLAnalyzer->add_schema_in_references($replace_primary_key_ddl);
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo 'test';
 ?>

@@ -83,7 +83,11 @@ class MySQLAnalyzer {
     function make_table_ddl()
     {
         $remove_comment_ddl = $this->remove_comment_in_ddl($this->ddl);
-        return $this->remove_cascade_update_in_ddl($remove_comment_ddl);
+        $remove_cascade_update_ddl = $this->remove_cascade_update_in_ddl($remove_comment_ddl);
+        $add_schema_in_references_ddl = $this->add_schema_in_references($remove_cascade_update_ddl);
+        $replace_primary_key_ddl = $this->replace_primary_key($add_schema_in_references_ddl);
+        $replace_type_ddl = $this->replace_type($replace_primary_key_ddl);
+        return $replace_type_ddl;
     }
 
     function replace_type($ddl)
@@ -100,7 +104,7 @@ class MySQLAnalyzer {
 
     function replace_primary_key($ddl)
     {
-        $constraint_primary_key_head = 'CONSTRAINT "' . $this->table_name . '_FK" PRIMARY KEY';
+        $constraint_primary_key_head = 'CONSTRAINT "' . $this->table_name . '_PK" PRIMARY KEY';
         return preg_replace("!PRIMARY\sKEY!is", $constraint_primary_key_head, $ddl);
     }
 
