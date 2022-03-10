@@ -113,6 +113,30 @@ class MySQLAnalyzer {
         $replacement = 'REFERENCES ' . $this->schema_name . '.$1';
         return preg_replace('!REFERENCES\s"([^"]+)"!i', $replacement, $ddl);
     }
+
+    function replace_enum_to_check_constraints($ddl)
+    {
+        $pattern_enum = '!"([^"]+)"\senum\(([^)]+)\)!i';
+        $constraint_check_head = "CONSTRAINTS CHECK_";
+        $constraint_check_middle_head = " CHECK (";
+        $constraint_check_middl_tail = " IN (";
+        $constraint_check_tail = "))";
+        $constraint_check_ddl = array();
+        if(preg_match_all($pattern_enum, $ddl, $matches)) {
+            $count_matches = count($matches[1]);
+            foreach($matches[1] as $key => $value) {
+                $constraint_check_ddl_item = $constraint_check_head . $matches[1][$key] . $constraint_check_middle_head . $matches[1][$key] . $constraint_check_middl_tail . $matches[2][$key] .$constraint_check_tail;
+                //if($key+1 != $count_matches) $constraint_check_ddl_item .= ',';
+                $constraint_check_ddl[] = $constraint_check_ddl_item;
+            }
+        }
+        if(count($constraint_check_ddl) != 0) {
+            $result_ddl = ',' . implode(',', $constraint_check_ddl);
+            $result_ddl .= ');';
+            return preg_replace("!\);!is", $result_ddl, $ddl);
+        }
+        return $ddl;
+    }
 }
 
 ?>

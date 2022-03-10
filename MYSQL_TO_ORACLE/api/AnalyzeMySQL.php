@@ -32,11 +32,6 @@ print_r($comment_ddl);
 
 $table_ddl = $MySQLAnalyzer->make_table_ddl();
 
-echo "!!!!!";
-echo $table_ddl;
-
-echo '<br>';
-echo '<br>';
-echo '<br>';
-echo 'test';
+echo "ZZZZZ";
+echo $MySQLAnalyzer->replace_enum_to_check_constraints($table_ddl);
 ?>
