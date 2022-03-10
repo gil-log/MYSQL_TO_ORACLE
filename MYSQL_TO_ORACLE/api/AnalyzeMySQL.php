@@ -27,4 +27,14 @@ if($index_ddl != null) {
 }
 
 $table_ddl = $MySQLAnalyzer->check_invalid_query_end($table_ddl);
+
+$result = array(
+  "TABLE_DDL" => $table_ddl
+  , "COMMENT_DDL" => $comment_ddl
+  , "SEQ_DDL" => $seq_ddl
+  , "SYNONYM_DDL" => $synonym_ddl
+  , "INDEX_DDL" => $index_ddl
+);
+
+echo json_encode($result);
 ?>
