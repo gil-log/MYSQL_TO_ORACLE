@@ -38,4 +38,8 @@ $replace_primary_key_ddl = $MySQLAnalyzer->replace_primary_key($replace_type_ddl
 
 echo "WWWWW";
 echo $replace_primary_key_ddl;
+
+
+echo "!!!@$!$!$!$";
+echo $MySQLAnalyzer->add_schema_in_references($replace_primary_key_ddl);
 ?>

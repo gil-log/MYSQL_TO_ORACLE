@@ -106,7 +106,8 @@ class MySQLAnalyzer {
 
     function add_schema_in_references($ddl)
     {
-        return preg_replace('!REFERENCES\s"([^"]+)"!is', 'REFERENCES "' . $this->schema_name . "." . $1, $ddl);
+        $replacement = 'REFERENCES ' . $this->schema_name . '.$1';
+        return preg_replace('!REFERENCES\s"([^"]+)"!i', $replacement, $ddl);
     }
 }
 
