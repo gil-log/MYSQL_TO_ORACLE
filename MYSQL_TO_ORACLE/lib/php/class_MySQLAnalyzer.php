@@ -128,7 +128,7 @@ class MySQLAnalyzer {
             }
         }
         if(count($constraint_check_ddl) != 0) {
-            $replace_enum_to_varchar_ddl = preg_replace('!\s(enum[^)]+\))!i', ' VARCHAR2(30)', $ddl);
+            $replace_enum_to_varchar_ddl = preg_replace('!\s(enum[^)]+\))!i', ' VARCHAR(30)', $ddl);
             $result_ddl = ',' . chr(10) . implode(',' . chr(10), $constraint_check_ddl);
             $result_ddl .= chr(10) . ');';
             return preg_replace("!\);!is", $result_ddl, $replace_enum_to_varchar_ddl);

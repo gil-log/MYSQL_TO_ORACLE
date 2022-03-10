@@ -110,9 +110,23 @@ function analyzeMysql() {
         TABLE_COMMENT : table_comment
     };
     console.log(requestData);
-    callAjax(url, method, requestData, console.log);
+    callAjax(url, method, requestData, test);
 }
+function test(data) {
+    const response = JSON.parse(data);
+    const table_ddl = response.TABLE_DDL;
+    const seq_ddl = response.SEQ_DDL;
+    const index_ddl = response.INDEX_DDL;
+    const comment_ddl = response.COMMENT_DDL;
+    const synonym_ddl = response.SYNONYM_DDL;
+    const oracleDDLArea = document.getElementById("oracle_ddl");
+    oracleDDLArea.value = table_ddl;
+    oracleDDLArea.value += '\n\n' +  seq_ddl;
+    oracleDDLArea.value += '\n\n' +  index_ddl;
+    oracleDDLArea.value += '\n\n' +  comment_ddl;
+    oracleDDLArea.value += '\n\n' +  synonym_ddl;
 
+}
 function test_page(response) {
     alert(response);
 }
