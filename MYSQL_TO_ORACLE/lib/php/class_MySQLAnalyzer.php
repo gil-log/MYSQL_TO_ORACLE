@@ -161,6 +161,11 @@ class MySQLAnalyzer {
         }
         return $temp_ddl;
     }
+
+    function make_index_ddl($ddl)
+    {
+        preg_replace("!!i")
+    }
 }
 
 ?>
