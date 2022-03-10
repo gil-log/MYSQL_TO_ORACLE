@@ -103,6 +103,11 @@ class MySQLAnalyzer {
         $constraint_primary_key_head = 'CONSTRAINT "' . $this->table_name . '_FK" PRIMARY KEY';
         return preg_replace("!PRIMARY\sKEY!is", $constraint_primary_key_head, $ddl);
     }
+
+    function add_schema_in_references($ddl)
+    {
+        return preg_replace('!REFERENCES\s"([^"]+)"!is', 'REFERENCES "' . $this->schema_name . "." . $1, $ddl);
+    }
 }
 
 ?>
