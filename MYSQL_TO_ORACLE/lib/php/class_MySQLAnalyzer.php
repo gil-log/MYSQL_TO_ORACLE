@@ -20,11 +20,6 @@ class MySQLAnalyzer {
         $this -> table_comment = $table_comment;
     }
 
-    function echo_property()
-    {
-        echo "DDL : " . $this->ddl . " SCHEMA NAME : " . $this->schema_name;
-    }
-
     function get_table_name()
     {
         $temp_ddl = $this -> ddl;
@@ -39,7 +34,6 @@ class MySQLAnalyzer {
     function get_comment_list()
     {
         $temp_ddl = $this -> ddl;
-        //$pattern_comment = '!\"[^\"]+\"\s[^\,]+COMMENT\s\'([^\']+)\'\,!i';
         $pattern_comment = "!\"([^\"]+)\"[^\"]+COMMENT\s'([^']+)',!i";
 
         if(preg_match_all($pattern_comment, $temp_ddl, $matches)) {
@@ -123,13 +117,13 @@ class MySQLAnalyzer {
         $pattern_enum = '!"([^"]+)"\senum\(([^)]+)\)!i';
         $constraint_check_head = "CONSTRAINTS CHECK_";
         $constraint_check_middle_head = " CHECK (";
-        $constraint_check_middl_tail = " IN (";
+        $constraint_check_middle_tail = " IN (";
         $constraint_check_tail = "))";
         $constraint_check_ddl = array();
         if(preg_match_all($pattern_enum, $ddl, $matches)) {
             $count_matches = count($matches[1]);
             foreach($matches[1] as $key => $value) {
-                $constraint_check_ddl_item = $constraint_check_head . $matches[1][$key] . $constraint_check_middle_head . $matches[1][$key] . $constraint_check_middl_tail . $matches[2][$key] .$constraint_check_tail;
+                $constraint_check_ddl_item = $constraint_check_head . $matches[1][$key] . $constraint_check_middle_head . $matches[1][$key] . $constraint_check_middle_tail . $matches[2][$key] . $constraint_check_tail;
                 $constraint_check_ddl[] = $constraint_check_ddl_item;
             }
         }
