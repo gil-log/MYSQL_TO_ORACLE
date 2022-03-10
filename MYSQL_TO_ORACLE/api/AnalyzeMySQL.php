@@ -54,16 +54,31 @@ $synonym_ddl = $MySQLAnalyzer->make_synonym_ddl();
 echo $synonym_ddl;
 
 
+//echo chr(10);
+//echo chr(10);
+
+
+//$check_invalid_query_end_case_one = $MySQLAnalyzer->check_invalid_query_end($decodedRequest->DDL);
+
+//echo $check_invalid_query_end_case_one;
+
+//echo chr(10);
+//echo chr(10);
+
+//echo $check_invalid_query_end_case_two = $MySQLAnalyzer->check_invalid_query_end($table_ddl);
+
+$index_ddl = $MySQLAnalyzer->make_index_ddl($table_ddl);
+
+echo "IDNEX_DDL ===";
 echo chr(10);
-echo chr(10);
 
-
-$check_invalid_query_end_case_one = $MySQLAnalyzer->check_invalid_query_end($decodedRequest->DDL);
-
-echo $check_invalid_query_end_case_one;
+echo $index_ddl;
 
 echo chr(10);
-echo chr(10);
-
-echo $check_invalid_query_end_case_two = $MySQLAnalyzer->check_invalid_query_end($table_ddl);
+if($index_ddl != null) {
+    $remove_index_in_ddl = $MySQLAnalyzer -> remove_key_in_ddl($table_ddl);
+    echo"????";
+    echo chr(10);
+    echo $remove_index_in_ddl;
+}
 ?>

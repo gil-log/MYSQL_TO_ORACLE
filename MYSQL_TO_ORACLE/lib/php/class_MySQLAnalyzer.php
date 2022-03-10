@@ -164,7 +164,22 @@ class MySQLAnalyzer {
 
     function make_index_ddl($ddl)
     {
-        preg_replace("!!i")
+        if(preg_match_all('!,[\s]+KEY\s"[^"]+"\s\("([^)]+)"\)!i', $ddl, $matches)) {
+            $index_ddl_head = "CREATE INDEX " . $this->schema_name . "." . $this->table_name . "_FK_IDX" . " ON " . $this->schema_name . "." . $this->table_name . "(";
+            $matched_key_column = implode(", ", $matches[1]);
+            $index_ddl_tail = ");";
+            return $index_ddl_head . $matched_key_column . $index_ddl_tail;
+
+        }
+        return null;
+    }
+
+    function remove_key_in_ddl($ddl)
+    {
+        if(preg_match_all('!,[\s]+KEY\s"[^"]+"\s\("([^)]+)"\)!i', $ddl, $matches)) {
+            return preg_replace('!,[\s]+KEY\s"[^"]+"\s\("([^)]+)"\)!i',"" , $ddl);
+        }
+        return $ddl;
     }
 }
 
