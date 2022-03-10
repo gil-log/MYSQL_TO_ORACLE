@@ -97,7 +97,7 @@ function analyzeMysql() {
       SCHEMA_NAME : schema_name
     };
     console.log(requestData);
-    callAjax(url, method, requestData, alert);
+    callAjax(url, method, requestData, console.log);
 }
 
 function test_page(response) {

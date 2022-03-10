@@ -43,9 +43,11 @@ if($matched_comment_list) {
     }
     echo "-----------";
 }
-$remove_comment_ddl = $MySQLAnalyzer->remove_comment_in_ddl();
-if($remove_comment_ddl) {
-    echo "[REMOVE COMMENT DDL] ";
-    echo $remove_comment_ddl;
-}
+$remove_comment_ddl = $MySQLAnalyzer->remove_comment_in_ddl($MySQLAnalyzer->ddl);
+echo "[REMOVE COMMENT DDL] ";
+echo $remove_comment_ddl;
+
+$remove_casecade_update_ddl = $MySQLAnalyzer->remove_cascade_update_in_ddl($remove_comment_ddl);
+echo "[REMOVE CASCADE UPDATE DDL] ";
+echo $remove_casecade_update_ddl;
 ?>

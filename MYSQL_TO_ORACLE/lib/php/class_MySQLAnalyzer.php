@@ -41,9 +41,14 @@ class MySQLAnalyzer {
         return null;
     }
 
-    function remove_comment_in_ddl()
+    function remove_comment_in_ddl($ddl)
     {
-        return preg_replace("!\sCOMMENT\s'[^']+'!i", "", $this->ddl);
+        return preg_replace("!\sCOMMENT\s'[^']+'!i", "", $ddl);
+    }
+
+    function remove_cascade_update_in_ddl($ddl)
+    {
+        return preg_replace("!\sON\sUPDATE\sCASCADE!i", "", $ddl);
     }
 }
 
