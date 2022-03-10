@@ -40,6 +40,11 @@ class MySQLAnalyzer {
         }
         return null;
     }
+
+    function remove_comment_in_ddl()
+    {
+        return preg_replace("!\sCOMMENT\s'[^']+'!i", "", $this->ddl);
+    }
 }
 
 ?>

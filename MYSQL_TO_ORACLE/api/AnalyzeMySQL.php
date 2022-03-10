@@ -43,4 +43,9 @@ if($matched_comment_list) {
     }
     echo "-----------";
 }
+$remove_comment_ddl = $MySQLAnalyzer->remove_comment_in_ddl();
+if($remove_comment_ddl) {
+    echo "[REMOVE COMMENT DDL] ";
+    echo $remove_comment_ddl;
+}
 ?>
