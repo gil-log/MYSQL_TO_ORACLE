@@ -102,7 +102,7 @@ function analyzeMysql() {
     let schema_name = document.getElementById("schema_name").value;
     console.log(schema_name);
     let table_comment = document.getElementById("table_comment").value;
-    const url = "../api/AnalyzeMySQL.php";
+    const url = "../api/getOracleMigrationDDL.php";
     const method = "POST";
     const requestData = {
         DDL : mysql_ddl,
