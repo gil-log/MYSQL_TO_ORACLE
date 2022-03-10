@@ -31,6 +31,7 @@ $comment_ddl = $MySQLAnalyzer->make_comment_ddl();
 print_r($comment_ddl);
 
 $table_ddl = $MySQLAnalyzer->make_table_ddl();
-echo "[REMOVE CASCADE UPDATE DDL] ";
-echo $table_ddl;
+
+$replace_type_ddl = $MySQLAnalyzer->replace_type($table_ddl);
+echo $replace_type_ddl;
 ?>

@@ -82,6 +82,16 @@ class MySQLAnalyzer {
         $remove_comment_ddl = $this->remove_comment_in_ddl($this->ddl);
         return $this->remove_cascade_update_in_ddl($remove_comment_ddl);
     }
+
+    function replace_type($ddl)
+    {
+        $replace_int_type = preg_replace("!\sint\([^\s]+\)!i", " NUMBER(11)", $ddl);
+        $replace_mediumint_type = preg_replace("!\smediumint\([^\s]+\)!i", " NUMBER(11)", $replace_int_type);
+        $replace_smallint_type = preg_replace("!\ssmallint\([^\s]+\)!i", " NUMBER(6)", $replace_mediumint_type);
+        $replace_tinyint_type = preg_replace("!\stinyint\([^\s]+\)!i", " NUMBER(3)", $replace_smallint_type);
+
+        return $replace_tinyint_type;
+    }
 }
 
 ?>
