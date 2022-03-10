@@ -64,6 +64,9 @@ class MySQLAnalyzer {
         return $seq_ddl_head. $this->schema_name . "." . $seq_table_name . $seq_ddl_tail;
     }
 
+    /**
+     * @throws Exception
+     */
     function make_comment_ddl()
     {
         $comment_ddl_head = "COMMENT ON COLUMN ";
@@ -93,6 +96,12 @@ class MySQLAnalyzer {
         $replace_text_type = preg_replace("!\stext!i", " CLOB", $replace_datetime_type);
         $replace_character_set_type = preg_replace("!\sCHARACTER\sSET\sutf8mb4!i", "", $replace_text_type);
         return $replace_character_set_type;
+    }
+
+    function replace_primary_key($ddl)
+    {
+        $constraint_primary_key_head = 'CONSTRAINT "' . $this->table_name . '_FK" PRIMARY KEY';
+        return preg_replace("!PRIMARY\sKEY!is", $constraint_primary_key_head, $ddl);
     }
 }
 
