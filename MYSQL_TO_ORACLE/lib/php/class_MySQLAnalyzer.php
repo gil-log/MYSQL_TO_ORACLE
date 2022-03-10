@@ -89,8 +89,10 @@ class MySQLAnalyzer {
         $replace_mediumint_type = preg_replace("!\smediumint\([^\s]+\)!i", " NUMBER(11)", $replace_int_type);
         $replace_smallint_type = preg_replace("!\ssmallint\([^\s]+\)!i", " NUMBER(6)", $replace_mediumint_type);
         $replace_tinyint_type = preg_replace("!\stinyint\([^\s]+\)!i", " NUMBER(3)", $replace_smallint_type);
-
-        return $replace_tinyint_type;
+        $replace_datetime_type = preg_replace("!\sdatetime\s!i", " TIMESTAMP ", $replace_tinyint_type);
+        $replace_text_type = preg_replace("!\stext!i", " CLOB", $replace_datetime_type);
+        $replace_character_set_type = preg_replace("!\sCHARACTER\sSET\sutf8mb4!i", "", $replace_text_type);
+        return $replace_character_set_type;
     }
 }
 
