@@ -76,6 +76,12 @@ class MySQLAnalyzer {
         }
         return $comment_ddl;
     }
+
+    function make_table_ddl()
+    {
+        $remove_comment_ddl = $this->remove_comment_in_ddl($this->ddl);
+        return $this->remove_cascade_update_in_ddl($remove_comment_ddl);
+    }
 }
 
 ?>

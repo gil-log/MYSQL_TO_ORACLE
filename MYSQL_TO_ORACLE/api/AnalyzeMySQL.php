@@ -30,9 +30,7 @@ $comment_ddl = $MySQLAnalyzer->make_comment_ddl();
 
 print_r($comment_ddl);
 
-$remove_comment_ddl = $MySQLAnalyzer->remove_comment_in_ddl($MySQLAnalyzer->ddl);
-
-$remove_casecade_update_ddl = $MySQLAnalyzer->remove_cascade_update_in_ddl($remove_comment_ddl);
+$table_ddl = $MySQLAnalyzer->make_table_ddl();
 echo "[REMOVE CASCADE UPDATE DDL] ";
-echo $remove_casecade_update_ddl;
+echo $table_ddl;
 ?>
