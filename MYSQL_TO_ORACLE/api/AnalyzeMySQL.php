@@ -26,6 +26,13 @@ if($matched_table_name) {
     echo "[ERROR] TABLE NAME NOT MATCHED";
     exit();
 }
+$seq_table_name = preg_replace("!_!i", "", $matched_table_name);
+$seq_ddl_head = "CREATE SEQUENCE ";
+$seq_ddl_tail = "SEQ INCREMENT BY 1 START WITH 1;";
+echo "WWWW";
+echo $seq_ddl_head. $MySQLAnalyzer->schema_name . "." . $seq_table_name . $seq_ddl_tail;
+echo "WWWW";
+
 $matched_comment_list = $MySQLAnalyzer->get_comment_list();
 if($matched_comment_list) {
     $comment_ddl_head = "COMMENT ON COLUMN ";
