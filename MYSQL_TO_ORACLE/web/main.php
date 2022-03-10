@@ -113,9 +113,6 @@ function analyzeMysql() {
     callAjax(url, method, requestData, test);
 }
 function test(data) {
-    console.log("----------");
-    console.log(data);
-    console.log("----------");
     const response = JSON.parse(data);
     const table_ddl = response.TABLE_DDL;
     const seq_ddl = response.SEQ_DDL;
@@ -124,11 +121,18 @@ function test(data) {
     const synonym_ddl = response.SYNONYM_DDL;
     const oracleDDLArea = document.getElementById("oracle_ddl");
     oracleDDLArea.value = table_ddl;
-    oracleDDLArea.value += '\n\n' +  seq_ddl;
-    oracleDDLArea.value += '\n\n' +  index_ddl;
-    oracleDDLArea.value += '\n\n' +  comment_ddl;
-    oracleDDLArea.value += '\n\n' +  synonym_ddl;
-
+    if(seq_ddl != null) {
+        oracleDDLArea.value += '\n\n' +  seq_ddl;
+    }
+    if(index_ddl != null) {
+        oracleDDLArea.value += '\n\n' +  index_ddl;
+    }
+    if(comment_ddl != null) {
+        oracleDDLArea.value += '\n\n' +  comment_ddl;
+    }
+    if(synonym_ddl != null) {
+        oracleDDLArea.value += '\n\n' +  synonym_ddl;
+    }
 }
 function test_page(response) {
     alert(response);
