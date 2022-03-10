@@ -69,10 +69,12 @@ class MySQLAnalyzer {
         $comment_ddl_head = "COMMENT ON COLUMN ";
         $comment_ddl_tail = " IS '";
         $comment_ddl = array();
+        $matched_comment_list = $this->get_comment_list();
         foreach($matched_comment_list[1] as $key => $value) {
-            $temp_comment_ddl_item = $comment_ddl_head . $matched_table_name . "." . $matched_comment_list[1][$key] . $comment_ddl_tail . $matched_comment_list[2][$key] . "';";
+            $temp_comment_ddl_item = $comment_ddl_head . $this->table_name . "." . $matched_comment_list[1][$key] . $comment_ddl_tail . $matched_comment_list[2][$key] . "';";
             $comment_ddl[] = $temp_comment_ddl_item;
         }
+        return $comment_ddl;
     }
 }
 
