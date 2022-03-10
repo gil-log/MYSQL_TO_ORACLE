@@ -64,9 +64,6 @@ class MySQLAnalyzer {
         return $seq_ddl_head. $this->schema_name . "." . $seq_table_name . $seq_ddl_tail;
     }
 
-    /**
-     * @throws Exception
-     */
     function make_comment_ddl()
     {
         $comment_ddl_head = "COMMENT ON COLUMN ";
@@ -77,7 +74,7 @@ class MySQLAnalyzer {
             $temp_comment_ddl_item = $comment_ddl_head . $this->table_name . "." . $matched_comment_list[1][$key] . $comment_ddl_tail . $matched_comment_list[2][$key] . "';";
             $comment_ddl[] = $temp_comment_ddl_item;
         }
-        return $comment_ddl;
+        return implode(chr(10), $comment_ddl);
     }
 
     function make_table_ddl()
@@ -87,7 +84,8 @@ class MySQLAnalyzer {
         $add_schema_in_references_ddl = $this->add_schema_in_references($remove_cascade_update_ddl);
         $replace_primary_key_ddl = $this->replace_primary_key($add_schema_in_references_ddl);
         $replace_type_ddl = $this->replace_type($replace_primary_key_ddl);
-        return $replace_type_ddl;
+        $replace_enum_to_check_ddl = $this->replace_enum_to_check_constraints($replace_type_ddl);
+        return $replace_enum_to_check_ddl;
     }
 
     function replace_type($ddl)
@@ -126,14 +124,14 @@ class MySQLAnalyzer {
             $count_matches = count($matches[1]);
             foreach($matches[1] as $key => $value) {
                 $constraint_check_ddl_item = $constraint_check_head . $matches[1][$key] . $constraint_check_middle_head . $matches[1][$key] . $constraint_check_middl_tail . $matches[2][$key] .$constraint_check_tail;
-                //if($key+1 != $count_matches) $constraint_check_ddl_item .= ',';
                 $constraint_check_ddl[] = $constraint_check_ddl_item;
             }
         }
         if(count($constraint_check_ddl) != 0) {
-            $result_ddl = ',' . implode(',', $constraint_check_ddl);
-            $result_ddl .= ');';
-            return preg_replace("!\);!is", $result_ddl, $ddl);
+            $replace_enum_to_varchar_ddl = preg_replace('!\s(enum[^)]+\))!i', ' VARCHAR2(30)', $ddl);
+            $result_ddl = ',' . chr(10) . implode(',' . chr(10), $constraint_check_ddl);
+            $result_ddl .= chr(10) . ');';
+            return preg_replace("!\);!is", $result_ddl, $replace_enum_to_varchar_ddl);
         }
         return $ddl;
     }

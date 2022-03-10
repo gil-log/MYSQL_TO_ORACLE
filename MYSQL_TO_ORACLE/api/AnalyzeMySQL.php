@@ -22,16 +22,27 @@ if($matched_table_name) {
     exit();
 }
 
+echo chr(10);
+echo chr(10);
+
+$table_ddl = $MySQLAnalyzer->make_table_ddl();
+
+echo $table_ddl;
+
+
+echo chr(10);
+echo chr(10);
+
+$comment_ddl = $MySQLAnalyzer->make_comment_ddl();
+
+echo($comment_ddl);
+
+
+echo chr(10);
+echo chr(10);
+
 $seq_ddl = $MySQLAnalyzer->make_sequence_ddl();
 
 echo $seq_ddl;
 
-$comment_ddl = $MySQLAnalyzer->make_comment_ddl();
-
-print_r($comment_ddl);
-
-$table_ddl = $MySQLAnalyzer->make_table_ddl();
-
-echo "ZZZZZ";
-echo $MySQLAnalyzer->replace_enum_to_check_constraints($table_ddl);
 ?>
