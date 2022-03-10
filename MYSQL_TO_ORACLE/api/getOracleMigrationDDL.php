@@ -28,6 +28,8 @@ if($index_ddl != null) {
 
 $table_ddl = $MySQLAnalyzer->check_invalid_query_end($table_ddl);
 
+$table_ddl = $MySQLAnalyzer->switch_null_default_location($table_ddl);
+
 $result = array(
   "TABLE_DDL" => $table_ddl
   , "COMMENT_DDL" => $comment_ddl
