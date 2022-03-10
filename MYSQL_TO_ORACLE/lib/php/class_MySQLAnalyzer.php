@@ -4,8 +4,6 @@ class MySQLAnalyzer {
     public $ddl;
     public $schema_name;
     public $table_name;
-    public $constraint_ddl;
-    public $primary_key;
 
     /**
      * @throws Exception

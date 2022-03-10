@@ -5,16 +5,6 @@ require_once ("../lib/php/class_MySQLAnalyzer.php");
 $request = file_get_contents("php://input");
 $decodedRequest = json_decode($request);
 
-if($decodedRequest->DDL == null) {
-    echo "[ERROR] DDL NOT EXIST";
-    exit();
-}
-
-if($decodedRequest->SCHEMA_NAME == null) {
-    echo "[ERROR] SCHEMA NAME NOT EXIST";
-    exit();
-}
-
 try {
     $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
 } catch(Exception $e) {
@@ -31,12 +21,10 @@ if($matched_table_name) {
     echo "[ERROR] TABLE NAME NOT MATCHED";
     exit();
 }
-$seq_table_name = preg_replace("!_!i", "", $matched_table_name);
-$seq_ddl_head = "CREATE SEQUENCE ";
-$seq_ddl_tail = "SEQ INCREMENT BY 1 START WITH 1;";
-echo "WWWW";
-echo $seq_ddl_head. $MySQLAnalyzer->schema_name . "." . $seq_table_name . $seq_ddl_tail;
-echo "WWWW";
+
+$seq_ddl = $MySQLAnalyzer->make_sequence_ddl();
+
+echo $seq_ddl;
 
 $matched_comment_list = $MySQLAnalyzer->get_comment_list();
 if($matched_comment_list) {
