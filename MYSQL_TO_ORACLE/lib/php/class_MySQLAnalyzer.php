@@ -4,11 +4,12 @@ class MySQLAnalyzer {
     public $ddl;
     public $schema_name;
     public $table_name;
+    public $table_comment;
 
     /**
      * @throws Exception
      */
-    function __construct($DDL, $SCHEMA_NAME)
+    function __construct($DDL, $SCHEMA_NAME, $table_comment)
     {
         if(!$DDL) throw new Exception("[ERROR] DDL NOT EXIST");
         $this -> ddl = $DDL;
@@ -16,6 +17,7 @@ class MySQLAnalyzer {
         $this -> schema_name = $SCHEMA_NAME;
         if(!$this->get_table_name()) throw new Exception("[ERROR] TABLE NAME NOT MATCHED");
         $this -> table_name = $this -> get_table_name();
+        $this -> table_comment = $table_comment;
     }
 
     function echo_property()
@@ -70,11 +72,16 @@ class MySQLAnalyzer {
         $comment_ddl_tail = " IS '";
         $comment_ddl = array();
         $matched_comment_list = $this->get_comment_list();
+        $result_ddl = "";
+        if($this->table_comment) {
+            $result_ddl .= "COMMENT ON TABLE " . $this->schema_name . "." . $this->table_name . " IS '" . $this->table_comment . "';" . chr(10);
+        }
         foreach($matched_comment_list[1] as $key => $value) {
             $temp_comment_ddl_item = $comment_ddl_head . $this->table_name . "." . $matched_comment_list[1][$key] . $comment_ddl_tail . $matched_comment_list[2][$key] . "';";
             $comment_ddl[] = $temp_comment_ddl_item;
         }
-        return implode(chr(10), $comment_ddl);
+        $result_ddl .= implode(chr(10), $comment_ddl);
+        return $result_ddl;
     }
 
     function make_table_ddl()
@@ -84,8 +91,7 @@ class MySQLAnalyzer {
         $add_schema_in_references_ddl = $this->add_schema_in_references($remove_cascade_update_ddl);
         $replace_primary_key_ddl = $this->replace_primary_key($add_schema_in_references_ddl);
         $replace_type_ddl = $this->replace_type($replace_primary_key_ddl);
-        $replace_enum_to_check_ddl = $this->replace_enum_to_check_constraints($replace_type_ddl);
-        return $replace_enum_to_check_ddl;
+        return $this->replace_enum_to_check_constraints($replace_type_ddl);
     }
 
     function replace_type($ddl)
@@ -134,6 +140,26 @@ class MySQLAnalyzer {
             return preg_replace("!\);!is", $result_ddl, $replace_enum_to_varchar_ddl);
         }
         return $ddl;
+    }
+
+    function make_synonym_ddl()
+    {
+        return "CREATE PUBLIC SYNONYM " . $this->table_name . " FOR " . $this->schema_name . "." . $this->table_name . ";";
+    }
+
+    function check_invalid_query_end($ddl)
+    {
+        $result = "";
+        $temp_ddl = $ddl;
+        if(preg_match('!,\n\);!i', $ddl, $matches)) {
+            $result .= "CASE1 ";
+            $temp_ddl = preg_replace('!,\n\);!i', chr(10) . ");", $temp_ddl);
+        }
+        if(preg_match('!,\n,!i', $ddl, $matches)) {
+            $result .= "CASE2 ";
+            $temp_ddl = preg_replace('!,\n,!i',"," . chr(10), $temp_ddl);
+        }
+        return $temp_ddl;
     }
 }
 

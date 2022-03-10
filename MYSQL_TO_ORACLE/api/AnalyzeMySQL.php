@@ -6,7 +6,7 @@ $request = file_get_contents("php://input");
 $decodedRequest = json_decode($request);
 
 try {
-    $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME);
+    $MySQLAnalyzer = new MySQLAnalyzer($decodedRequest->DDL, $decodedRequest->SCHEMA_NAME, $decodedRequest->TABLE_COMMENT);
 } catch(Exception $e) {
     echo $e->getMessage();
     exit();
@@ -45,4 +45,25 @@ $seq_ddl = $MySQLAnalyzer->make_sequence_ddl();
 
 echo $seq_ddl;
 
+
+echo chr(10);
+echo chr(10);
+
+$synonym_ddl = $MySQLAnalyzer->make_synonym_ddl();
+
+echo $synonym_ddl;
+
+
+echo chr(10);
+echo chr(10);
+
+
+$check_invalid_query_end_case_one = $MySQLAnalyzer->check_invalid_query_end($decodedRequest->DDL);
+
+echo $check_invalid_query_end_case_one;
+
+echo chr(10);
+echo chr(10);
+
+echo $check_invalid_query_end_case_two = $MySQLAnalyzer->check_invalid_query_end($table_ddl);
 ?>

@@ -18,6 +18,10 @@
             margin-bottom: 20px;
             padding: 20px;
             border: 1px solid #828282;
+            display: flex;
+        }
+        .header_left {
+            margin-left: 10px;
         }
         #footer {
             clear: both;
@@ -64,10 +68,17 @@
 <body>
 <div id="wrapper">
     <div id="header">
-        <h2> 사용법 </h2>
-        <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
+        <div>
+            <h2> 사용법 </h2>
+            <h5> 왼쪽 파란색 영역에 MySQL DDL을 입력 후 컨버팅 버튼 클릭시 Oracle용 DDL 생성</h5>
+        </div>
+        <div class="header_left">
+            <h2> 컨버팅 대상 </h2>
+            <h5> Comment, Data Type, Enum, PK, FK, Synonym, Sequence, Index</h5>
+        </div>
     </div>
     <span>스키마 명 : </span><input id="schema_name" type="text" value="RENTA2"/>
+    <span>테이블 설명 : </span><input id="table_comment" type="text" value=""/>
     <input id="converter" type="button" value="컨버팅" onclick="convert()"/>
     <div class="content">
         <div class="left">
@@ -90,11 +101,13 @@ function analyzeMysql() {
     console.log(mysql_ddl);
     let schema_name = document.getElementById("schema_name").value;
     console.log(schema_name);
+    let table_comment = document.getElementById("table_comment").value;
     const url = "../api/AnalyzeMySQL.php";
     const method = "POST";
     const requestData = {
-      DDL : mysql_ddl,
-      SCHEMA_NAME : schema_name
+        DDL : mysql_ddl,
+        SCHEMA_NAME : schema_name,
+        TABLE_COMMENT : table_comment
     };
     console.log(requestData);
     callAjax(url, method, requestData, console.log);
