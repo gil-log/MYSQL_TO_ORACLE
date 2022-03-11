@@ -7,7 +7,7 @@
     <script type="text/javascript" src="../lib/js/common.js"></script>
     <style type="text/css">
         #wrapper {
-            width: 980px;
+            width: 100%;
             margin: 0px auto;
             padding: 20px;
             border-style: dotted;
