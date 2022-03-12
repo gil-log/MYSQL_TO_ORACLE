@@ -4,30 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>MySQL to Oracle Migratior</title>
-    <style type="text/css">
-        #wrapper{
-            width: 980px;
-            margin: 0px auto;
-            padding: 20px;
-            border-style: dotted;
-            border-radius: 20px;
-            border: 1px solid #828282;
-        }
-        #header{
-            margin-bottom: 20px;
-            padding: 20px;
-            border: 1px solid #828282;
-        }
-        #footer{
-            clear: both;
-            border-style: groove;
-            margin: 0px 5px;
-            background-color: #fff;
-            color: black;
-            text-align: center;
-            border: 1px solid #828282;
-        }
-    </style>
+ 
 </head>
 <body>
 <div id="wrapper">
