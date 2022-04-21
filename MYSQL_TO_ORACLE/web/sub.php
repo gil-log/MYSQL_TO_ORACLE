@@ -77,7 +77,7 @@
             <h5> Comment, Synonym, Sequence</h5>
         </div>
     </div>
-    <input id="converter" type="button" value="컨버팅" onclick="analyzeDDL()"/>
+    <input id="converter" type="button" value="추출" onclick="analyzeDDL()"/>
     <div class="content">
         <div class="left">
             <textarea class="text_area" id="oracle_ddl"></textarea>
@@ -96,31 +96,33 @@
         const url = "../api/getExtractionDDL.php";
         const method = "POST";
         const requestData = {
-            DDL : ddl
+            DDL : ddl,
+            SCHEMA_NAME : 'EXTRACTION',
+            TABLE_COMMENT : 'EXTRACTION'
         };
-        console.log(requestData);
         callAjax(url, method, requestData, afterAnalyzeDDL);
     }
     function afterAnalyzeDDL(data) {
         const response = JSON.parse(data);
-        const table_ddl = response.TABLE_DDL;
         const seq_ddl = response.SEQ_DDL;
-        const index_ddl = response.INDEX_DDL;
         const comment_ddl = response.COMMENT_DDL;
         const synonym_ddl = response.SYNONYM_DDL;
         const resultDDLArea = document.getElementById("result_ddl");
-        resultDDLArea.value = table_ddl;
+        resultDDLArea.value = '';
         if(seq_ddl != null) {
-            resultDDLArea.value += '\n\n' +  seq_ddl;
-        }
-        if(index_ddl != null) {
-            resultDDLArea.value += '\n\n' +  index_ddl;
+            seq_ddl.forEach(e => {
+                resultDDLArea.value += '\n\n' +  e;
+            })
         }
         if(comment_ddl != null) {
-            resultDDLArea.value += '\n\n' +  comment_ddl;
+            comment_ddl.forEach(e => {
+                resultDDLArea.value += '\n\n' +  e;
+            })
         }
         if(synonym_ddl != null) {
-            resultDDLArea.value += '\n\n' +  synonym_ddl;
+            synonym_ddl.forEach(e => {
+                resultDDLArea.value += '\n\n' +  e;
+            })
         }
     }
 </script>

@@ -13,11 +13,13 @@ class MySQLAnalyzer {
     {
         if(!$DDL) throw new Exception("[ERROR] DDL NOT EXIST");
         $this -> ddl = $DDL;
-        if(!$SCHEMA_NAME) throw new Exception("[ERROR] SCHEMA NAME NOT EXIST");
-        $this -> schema_name = $SCHEMA_NAME;
-        if(!$this->get_table_name()) throw new Exception("[ERROR] TABLE NAME NOT MATCHED");
-        $this -> table_name = $this -> get_table_name();
-        $this -> table_comment = $table_comment;
+        if($SCHEMA_NAME != 'EXTRACTION' && $table_comment != 'EXTRACTION') {
+            if(!$SCHEMA_NAME) throw new Exception("[ERROR] SCHEMA NAME NOT EXIST");
+            $this -> schema_name = $SCHEMA_NAME;
+            if(!$this->get_table_name()) throw new Exception("[ERROR] TABLE NAME NOT MATCHED");
+            $this -> table_name = $this -> get_table_name();
+            $this -> table_comment = $table_comment;
+        }
     }
 
     function get_table_name()
@@ -176,6 +178,30 @@ class MySQLAnalyzer {
     function switch_null_default_location($ddl)
     {
         return preg_replace('!(NOT\sNULL)\s(DEFAULT\s[^,]+),!i', '$2 $1,', $ddl);
+    }
+
+    function extractCommentDDL()
+    {
+        if(preg_match_all('!(COMMENT ON COLUMN[^;]+;)!i',$this-> ddl, $matches)) {
+            return $matches[1];
+        }
+        return null;
+    }
+
+    function extractSequenceDDL()
+    {
+        if(preg_match_all('!(CREATE SEQUENCE[^;]+;)!i',$this-> ddl, $matches)) {
+            return $matches[1];
+        }
+        return null;
+    }
+
+    function extractSynonymDDL()
+    {
+        if(preg_match_all('!(CREATE PUBLIC SYNONYM[^;]+;)!i',$this-> ddl, $matches)) {
+            return $matches[1];
+        }
+        return null;
     }
 }
 

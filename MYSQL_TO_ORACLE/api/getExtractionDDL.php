@@ -12,12 +12,16 @@ try {
     exit();
 }
 
+$comment_ddl = $MySQLAnalyzer->extractCommentDDL();
+
+$seq_ddl = $MySQLAnalyzer->extractSequenceDDL();
+
+$synonym_ddl = $MySQLAnalyzer->extractSynonymDDL();
+
 $result = array(
-    "TABLE_DDL" => $table_ddl
-, "COMMENT_DDL" => $comment_ddl
+"COMMENT_DDL" => $comment_ddl
 , "SEQ_DDL" => $seq_ddl
 , "SYNONYM_DDL" => $synonym_ddl
-, "INDEX_DDL" => $index_ddl
 );
 echo json_encode($result,JSON_UNESCAPED_UNICODE);
 ?>
