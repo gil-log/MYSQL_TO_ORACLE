@@ -69,8 +69,8 @@
 <div id="wrapper">
     <div id="header">
         <div>
-            <h2> 사용법 </h2>
-            <h5> 왼쪽 파란색 영역에 지금까지 누적한 Orcale DDL을 입력 후 추출 버튼 클릭</h5>
+            <h2>사용법 </h2>
+            <h5>왼쪽 파란색 영역에 지금까지 누적한 Orcale DDL을 입력 후 추출 버튼 클릭</h5>
         </div>
         <div class="header_left">
             <h2> 추출 대상 </h2>
